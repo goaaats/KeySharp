@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+
+        <PackageId>KeySharp</PackageId>
+        <PackageVersion>1.0.0</PackageVersion>
+        <FileVersion>1.0.0</FileVersion>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+        <Description>Cross-platform keychain</Description>
+
+        <Authors>goaaats</Authors>
+        <LangVersion>latest</LangVersion>
+
+        <PackageProjectUrl>https://github.com/goaaats/KeySharp</PackageProjectUrl>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/goaaats/KeySharp</RepositoryUrl>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../LICENSE.txt" Pack="true" PackagePath="\" />
+        <None Include="../README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="runtimes\**" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="runtimes\**" PackagePath="runtimes" Visible="false" />
+    </ItemGroup>
+
+</Project>

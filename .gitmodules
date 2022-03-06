@@ -1,0 +1,3 @@
+[submodule "native/lib/keychain"]
+	path = native/lib/keychain
+	url = https://github.com/hrantzsch/keychain
