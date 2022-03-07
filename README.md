@@ -1,26 +1,20 @@
 # KeySharp [![Nuget](https://img.shields.io/nuget/v/KeySharp)](https://www.nuget.org/packages/KeySharp/)
 
 Cross-platform OS keyring access for C#/.NET based on [keychain by hrantzsch](https://github.com/hrantzsch/keychain).
+All calls are potentially blocking, as the OS may ask the user to grant access or unlock the keychain.
 
 ### Example
 
 ```csharp
-private delegate int MessageBoxWDelegate(
-  IntPtr hWnd,
-  [MarshalAs(UnmanagedType.LPWStr)] string text,
-  [MarshalAs(UnmanagedType.LPWStr)] string caption,
-  NativeFunctions.MessageBoxType type);
+Keyring.SetPassword("com.example.test", "TestService", "user", "password");
 
-IntPtr pTarget = [...]; // Find address of target function
-
-var hook = new Hook<MessageBoxWDelegate>(pTarget, MessageBoxWDetour);
-hook.Enable();
-
-private int MessageBoxWDetour(IntPtr hwnd, string text, string caption, NativeFunctions.MessageBoxType type)
-{
-    Console.WriteLine($"Hook triggered: {hwnd:X} {text} {caption} {type}");
-    return this.messageBoxMinHook.Original(hwnd, text, caption, type);
+try {
+  var password = Keyring.GetPassword("com.example.test", "TestService", "user");
+} catch (KeyringException ex) // Thrown if password was not saved
+  // handle
 }
+
+Keyring.DeletePassword("com.example.test", "TestService", "user");
 ```
 
 ### Native libraries
