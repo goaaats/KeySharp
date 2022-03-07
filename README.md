@@ -21,6 +21,6 @@ Keyring.DeletePassword("com.example.test", "TestService", "user");
 The precompiled shared libraries in this repository are based on the code in the `native` folder, wrapping the keychain library by hrantzsch.
 | Platform | Compiler |
 |----------|----------|
-| Windows  | Visual C++ 2022 (Keychain library doesn't support mingw-w64 at the moment, TBD) |
-|          |          |
-|          |          |
+| win-x64  | Visual C++ 2022 (Keychain library doesn't support mingw-w64 at the moment, TBD) |
+| osx-x64   | AppleClang 13.0.0.13000029 (universal), macOS 10.11+ |
+| osx-arm64 | AppleClang 13.0.0.13000029 (universal), macOS 10.11+, take care: you need to sign your binaries to run on m1! |
