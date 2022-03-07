@@ -1,4 +1,4 @@
-# KeySharp [![Nuget](https://img.shields.io/nuget/v/MinSharp)](https://www.nuget.org/packages/MinSharp/)
+# KeySharp [![Nuget](https://img.shields.io/nuget/v/KeySharp)](https://www.nuget.org/packages/KeySharp/)
 
 Cross-platform OS keyring access for C#/.NET based on [keychain by hrantzsch](https://github.com/hrantzsch/keychain).
 
