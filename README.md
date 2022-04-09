@@ -22,5 +22,6 @@ The precompiled shared libraries in this repository are based on the code in the
 | Platform | Compiler |
 |----------|----------|
 | win-x64  | Visual C++ 2022 (Keychain library doesn't support mingw-w64 at the moment, TBD) |
+| linux-x64  | GCC 11.2.0(x86_64-pc-linux-gnu) |
 | osx-x64   | AppleClang 13.0.0.13000029 (universal), macOS 10.11+ |
 | osx-arm64 | AppleClang 13.0.0.13000029 (universal), macOS 10.11+, take care: you need to sign your binaries to run on m1! |
