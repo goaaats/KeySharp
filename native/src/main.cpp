@@ -8,26 +8,28 @@ extern "C" {
 
 EXPORTED bool setPassword(const char* package, const char* service, const char* user, const char* password)
 {
-	keychain::Error error{};
-	keychain::setPassword(package, service, user, password, error);
+	keychain::Error* error = new keychain::Error();
+	keychain::setPassword(package, service, user, password, *error);
 
-	if (error)
+	if (error->type != keychain::ErrorType::NoError)
 	{
-		lastError = &error;
+		lastError = error;
 		return false;
 	}
+
+	delete error;
 
 	return true;
 }
 
 EXPORTED const char* getPassword(const char* package, const char* service, const char* user)
 {
-	keychain::Error error{};
-	auto password = keychain::getPassword(package, service, user, error);
+	keychain::Error* error = new keychain::Error();
+	auto password = keychain::getPassword(package, service, user, *error);
 
-	if (error)
+	if (error->type != keychain::ErrorType::NoError)
 	{
-		lastError = &error;
+		lastError = error;
 		return nullptr;
 	}
 
@@ -35,19 +37,23 @@ EXPORTED const char* getPassword(const char* package, const char* service, const
 	std::copy(password.begin(), password.end(), writable);
 	writable[password.size()] = '\0';
 
+	delete error;
+
 	return writable;
 }
 
 EXPORTED bool deletePassword(const char* package, const char* service, const char* user)
 {
-	keychain::Error error{};
-	keychain::deletePassword(package, service, user, error);
+	keychain::Error* error = new keychain::Error();
+	keychain::deletePassword(package, service, user, *error);
 
 	if (error)
 	{
-		lastError = &error;
+		lastError = error;
 		return false;
 	}
+
+	delete error;
 
 	return true;
 }
