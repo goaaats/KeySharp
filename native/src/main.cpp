@@ -47,7 +47,7 @@ EXPORTED bool deletePassword(const char* package, const char* service, const cha
 	keychain::Error* error = new keychain::Error();
 	keychain::deletePassword(package, service, user, *error);
 
-	if (error)
+	if (error->type != keychain::ErrorType::NoError)
 	{
 		lastError = error;
 		return false;
