@@ -1,0 +1,42 @@
+name: Update compiled libraries
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/update-compiled-libraries.yml
+      - native/**/*
+  workflow_dispatch:
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            runtime: osx-arm64
+            lib: libskeychain.dylib
+          - os: ubuntu-latest
+            runtime: linux-x64
+            lib: libskeychain.so
+          - os: windows-latest
+            runtime: win-x64
+            lib: skeychain.dll
+      max-parallel: 1 # to avoid conflicts during git push
+      fail-fast: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4.1.0
+        with:
+          ref: master
+          submodules: true
+      - run: cmake -DCMAKE_BUILD_TYPE=Release -S native -B native
+      - run: cmake --build native
+      # On windows, MSBuild puts dll under "debug" folder
+      - run: cp native/${{ matrix.os == 'windows-latest' && 'debug/skeychain.dll' || matrix.lib }} KeySharp/runtimes/${{ matrix.runtime }}/native/${{ matrix.lib }}
+      - if: matrix.os == 'macos-latest'
+        run: cp native/${{ matrix.lib }} KeySharp/runtimes/osx-x64/native/${{ matrix.lib }}
+      - run: git add KeySharp/runtimes
+      - run: git config --global user.name "github-actions[bot]"
+      - run: git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - run: git commit -m "[${{ matrix.runtime == 'osx-arm64' && 'osx-arm64/osx-x64' || matrix.runtime }}] Update ${{ matrix.lib }}"
+      - run: git push

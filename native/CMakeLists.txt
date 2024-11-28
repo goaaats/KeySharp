@@ -1,6 +1,8 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.12.4)
 
 cmake_policy(SET CMP0054 NEW)
+
+set (CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "macOS Build architectures" FORCE)
 
 set (PROJECT_VERSION "1.0")
 
